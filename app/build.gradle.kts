@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -51,4 +53,25 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    // Retrofit - consumo da API
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+
+// Room - banco de dados local
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+// Hilt - injeção de dependência
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+// Coroutines - operações assíncronas
+    implementation(libs.coroutines.android)
+
+// Navigation - navegação entre telas
+    implementation(libs.navigation.compose)
+
+// ViewModel com Compose
+    implementation(libs.lifecycle.viewmodel.compose)
 }
