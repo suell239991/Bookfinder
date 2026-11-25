@@ -1,3 +1,4 @@
+
 package br.com.suell.bookfinder.presentation.home
 
 import androidx.lifecycle.ViewModel
@@ -5,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.suell.bookfinder.domain.model.Book
 import br.com.suell.bookfinder.domain.usecase.RefreshBooksUseCase
 import br.com.suell.bookfinder.domain.usecase.SearchBooksUseCase
+import br.com.suell.bookfinder.domain.usecase.SetFavoriteBookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +24,8 @@ data class HomeUiState(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val searchBooksUseCase: SearchBooksUseCase,
-    private val refreshBooksUseCase: RefreshBooksUseCase
+    private val refreshBooksUseCase: RefreshBooksUseCase,
+    private val setFavoriteBookUseCase: SetFavoriteBookUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -60,6 +63,15 @@ class HomeViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
+        }
+    }
+
+    fun toggleFavorite(book: Book) {
+        viewModelScope.launch {
+            setFavoriteBookUseCase(
+                book = book,
+                isFavorite = !book.isFavorite
+            )
         }
     }
 }
