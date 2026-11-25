@@ -1,3 +1,4 @@
+
 package br.com.suell.bookfinder.presentation.home
 
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    onFavoritesClick: () -> Unit
+) {
     val uiState by viewModel.uiState.collectAsState()
     var query by remember { mutableStateOf("") }
 
@@ -37,6 +41,13 @@ fun HomeScreen(viewModel: HomeViewModel) {
             text = "BookFinder",
             style = MaterialTheme.typography.headlineMedium
         )
+
+        Button(
+            onClick = onFavoritesClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Meus favoritos")
+        }
 
         OutlinedTextField(
             value = query,
@@ -58,7 +69,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
         }
 
         uiState.error?.let {
-            Text(text = it, color = MaterialTheme.colorScheme.error)
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error
+            )
         }
 
         if (!uiState.isLoading && uiState.books.isEmpty() && uiState.error == null) {
@@ -72,7 +86,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 Card(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
                         Text(
                             text = book.title,
                             style = MaterialTheme.typography.titleMedium

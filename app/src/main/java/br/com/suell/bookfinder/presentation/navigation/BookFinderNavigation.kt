@@ -1,3 +1,4 @@
+
 package br.com.suell.bookfinder.presentation.navigation
 
 import androidx.compose.runtime.Composable
@@ -20,11 +21,18 @@ fun BookFinderNavigation() {
     ) {
         composable("home") {
             val viewModel: HomeViewModel = hiltViewModel()
-            HomeScreen(viewModel)
+
+            HomeScreen(
+                viewModel = viewModel,
+                onFavoritesClick = {
+                    navController.navigate("favorites")
+                }
+            )
         }
 
         composable("favorites") {
             val viewModel: FavoritesViewModel = hiltViewModel()
+
             FavoritesScreen(viewModel)
         }
     }
