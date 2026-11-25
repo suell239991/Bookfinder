@@ -1,3 +1,4 @@
+
 package br.com.suell.bookfinder.presentation.favorites
 
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun FavoritesScreen(viewModel: FavoritesViewModel) {
+fun FavoritesScreen(
+    viewModel: FavoritesViewModel,
+    onBackClick: () -> Unit
+) {
     val favoriteBooks by viewModel.favoriteBooks.collectAsState()
 
     Column(
@@ -31,6 +36,13 @@ fun FavoritesScreen(viewModel: FavoritesViewModel) {
             style = MaterialTheme.typography.headlineMedium
         )
 
+        Button(
+            onClick = onBackClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Voltar")
+        }
+
         if (favoriteBooks.isEmpty()) {
             Text("Você ainda não tem livros favoritos.")
         }
@@ -43,7 +55,9 @@ fun FavoritesScreen(viewModel: FavoritesViewModel) {
                     modifier = Modifier.fillMaxWidth(),
                     onClick = { viewModel.removeFavorite(book) }
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
                         Text(
                             text = book.title,
                             style = MaterialTheme.typography.titleMedium

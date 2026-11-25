@@ -33,7 +33,12 @@ fun BookFinderNavigation() {
         composable("favorites") {
             val viewModel: FavoritesViewModel = hiltViewModel()
 
-            FavoritesScreen(viewModel)
+            FavoritesScreen(
+                viewModel = viewModel,
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
