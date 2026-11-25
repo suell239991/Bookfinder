@@ -3,6 +3,7 @@ package br.com.suell.bookfinder.presentation.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -87,16 +88,31 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
                             text = book.title,
                             style = MaterialTheme.typography.titleMedium
                         )
+
                         Text(text = "Autor: ${book.author}")
+
                         Text(
                             text = "Ano: ${book.firstPublishYear ?: "Não informado"}"
                         )
+
+                        Button(
+                            onClick = { viewModel.toggleFavorite(book) }
+                        ) {
+                            Text(
+                                if (book.isFavorite) {
+                                    "Remover dos favoritos"
+                                } else {
+                                    "Adicionar aos favoritos"
+                                }
+                            )
+                        }
                     }
                 }
             }
